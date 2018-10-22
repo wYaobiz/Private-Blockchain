@@ -22,8 +22,12 @@ module.exports = {
 	getBlockFromDB(key) {
 		return new Promise((resolve, reject) => {
 			db.get(key, (err, value) => {
-				if (err) return console.log('Not found!', err);
-				resolve(value)
+				if (value === undefined) {
+					return reject('Not found')
+				} else if (err) {
+					return reject(err)
+				}
+				return resolve(value)
 			})
 		})
 	},
